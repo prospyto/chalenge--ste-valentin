@@ -3,299 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Âme Sœur | Saint-Valentin 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --rouge-vif: #FF0000;
-            --rose-st-valentin: #FF1493;
-            --rouge-passion: #DC143C; 
-            --blanc-pur: #FFFFFF;
-            --blanc-casse: #F5F5F5;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--rose-st-valentin); color: #1d1d1f; overflow-x: hidden; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; position: relative; z-index: 10; }
-
-        /* --- TOP BAR --- */
-        .top-bar { background: var(--rouge-vif); color: white; text-align: center; padding: 12px 0; font-size: 0.8rem; font-weight: 600; position: sticky; top: 0; z-index: 2000; }
-
-        /* --- CŒUR GÉANT BACKGROUND --- */
-        .hero-bg-heart {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            max-width: 650px;
-            z-index: -1;
-            opacity: 0.4;
-            pointer-events: none;
-        }
-        .giant-heart-path {
-            fill: none;
-            stroke: var(--blanc-pur);
-            stroke-width: 2.5;
-            stroke-linecap: round;
-            stroke-dasharray: 2000;
-            stroke-dashoffset: 2000;
-            animation: drawGiantHeart 4s ease-out forwards;
-        }
-        @keyframes drawGiantHeart { to { stroke-dashoffset: 0; } }
-
-        /* --- BOUTON CTA --- */
-        .btn-cta { 
-            background: var(--rouge-vif); color: var(--blanc-pur); padding: 18px 45px; border-radius: 100px; 
-            text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 10px;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s; 
-            border: none; cursor: pointer; box-shadow: 0 10px 20px rgba(220, 20, 60, 0.3);
-            position: relative;
-        }
-        .btn-cta:hover { transform: scale(1.1); background: var(--rouge-passion); }
-        .vibrante { animation: vibrate-slow 1.5s infinite ease-in-out; }
-        @keyframes vibrate-slow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03) rotate(1deg); } }
-
-        /* --- ANIMATIONS CŒURS --- */
-        .draw-heart { width: 22px; height: 22px; fill: none; stroke: white; stroke-width: 3; stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw 2.5s infinite linear; }
-        @keyframes draw { 50% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -100; } }
-        .floating-heart { position: absolute; top: -10px; right: 20px; font-size: 20px; animation: fly-up 2s infinite ease-in; opacity: 0; }
-        @keyframes fly-up { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-60px) scale(1.5); opacity: 0; } }
-
-        /* --- SECTIONS --- */
-        .white-wrapper { background: var(--blanc-casse); border-radius: 40px; padding: 50px; margin-bottom: 40px; overflow: hidden; position: relative; }
-        .section-header { font-size: 1.8rem; font-weight: 800; margin-bottom: 30px; border-left: 5px solid var(--rouge-passion); padding-left: 15px; }
-        .flex-layout { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
-        .flex-text { flex: 1; min-width: 300px; }
-        .side-img { width: 100%; max-width: 300px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-
-        /* --- GRILLE TECHNIQUE & BULLES --- */
-        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .tech-card { background: white; padding: 30px; border-radius: 20px; text-align: center; position: relative; transition: 0.4s; border: 2px solid transparent; }
-        
-        .heart-bubble { position: absolute; font-size: 14px; color: var(--rose-st-valentin); opacity: 0; animation: bubble-up 3s infinite ease-in; pointer-events: none; }
-        @keyframes bubble-up {
-            0% { transform: translateY(0) scale(0.5); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
-        }
-
-        /* --- CARROUSEL --- */
-        .carousel-container { height: 450px; display: flex; align-items: center; justify-content: center; perspective: 1200px; }
-        .review-card { position: absolute; width: 340px; background: white; padding: 30px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); text-align: center; transition: 0.1s linear; backface-visibility: hidden; }
-
-        /* --- CŒURS ÉCLATÉS --- */
-        .particle-heart { position: fixed; pointer-events: none; color: var(--rouge-passion); font-size: 24px; z-index: 99999; animation: heart-burst 0.8s ease-out forwards; }
-        @keyframes heart-burst { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--tr)); opacity: 0; } }
-
-        /* --- MEDIA QUERIES (POUR LE RESPONSIVE) --- */
-        @media (max-width: 768px) {
-            #hero { text-align: center; padding: 40px 10px; }
-            #hero h1 { font-size: 2.5rem !important; }
-            #hero-img { text-align: center; margin-top: 20px; order: 2; }
-            .hero-bg-heart { max-width: 320px; }
-            .white-wrapper { padding: 30px 20px; }
-            .flex-layout { flex-direction: column; text-align: center; }
-            .side-img { max-width: 100%; order: 1; }
-            .review-card { width: 280px; }
-            .carousel-container { height: 380px; }
-            .btn-cta { padding: 15px 30px; width: 100%; justify-content: center; }
-        }
-    </style>
+    <title>L'Âme Sœur | Challenge Saint-Valentin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylecsschalenge.css">
 </head>
 <body>
 
-    <div class="top-bar">LIVRAISON GARANTIE AVANT LA SAINT-VALENTIN 🌹</div>
+    <div class="top-bar">🌹 LIVRAISON GARANTIE AVANT LA SAINT-VALENTIN 🌹</div>
+    <canvas id="particle-canvas"></canvas>
 
     <div class="container">
-        <header id="hero" style="position:relative; padding: 60px 0; color: white; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-            <div class="hero-bg-heart">
-                <svg viewBox="0 0 500 500">
-                    <path class="giant-heart-path" d="M250,110 C250,110 240,30 150,30 C70,30 30,110 30,170 C30,280 160,380 250,450 C340,380 470,280 470,170 C470,110 430,30 350,30 C260,30 250,110 250,110 Z" />
-                </svg>
-            </div>
-
-            <div style="flex:1; min-width: 300px;">
-                <h1 id="typing-text" style="font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 20px;"></h1>
+        <header id="hero">
+            <div class="hero-text">
+                <h1 id="typing-text"></h1>
                 <div id="after-title" style="opacity:0; transition: 1s;">
-                    <p style="font-size: 1.2rem; margin-bottom: 30px;">L'étreinte infinie pour la Saint-Valentin 2026.</p>
-                    <button class="btn-cta" onclick="createBurst(event)">
-                        <svg class="draw-heart" viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.7C7.3 20.6 2.8 16.5 2.8 11.5 2.8 7.4 6 4.2 10.1 4.2 12.4 4.2 14.6 5.3 16 7.1 17.4 5.3 19.6 4.2 21.9 4.2 26 4.2 29.2 7.4 29.2 11.5 29.2 16.5 24.7 20.6 17.9 26.7L16 28.5Z"/></svg>
-                        JE COMMANDE MON ÂME SŒUR
-                    </button>
+                    <p style="margin-bottom: 30px;">L'Âme Sœur simule une présence humaine et capture votre parfum.</p>
+                    <a href="#offre" class="btn-cta btn-hero">ACHETER</a>
                 </div>
             </div>
-            <div id="hero-img" style="flex:1; text-align: right; opacity:0; transition: 1s;">
-                <img src="peluche.jpg" alt="L'Âme Sœur" style="width: 100%; max-width: 380px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));">
+            <div class="hero-image" id="hero-img">
+                <img src="peluche.jpg" alt="L'Âme Sœur" class="main-peluche">
             </div>
         </header>
 
-        <section class="white-wrapper">
-            <div class="flex-layout">
-                <div class="flex-text">
-                    <h2 class="section-header">2. Pourquoi l'offrir ?</h2>
-                    <p style="margin-bottom: 20px;"><strong>Une Déclaration Durable :</strong> Offrir des roses est un classique, mais elles s'effacent. L'Âme Sœur est une promesse tangible qui reste dans le temps, trônant fièrement comme un rappel constant de votre lien.</p>
-                    <p style="margin-bottom: 20px;"><strong>Un Pont émotionnel :</strong> Que vous soyez en déplacement ou simplement dans une autre pièce, cette peluche agit comme un "proxy" émotionnel. Elle réduit le sentiment de solitude nocturne grâce à sa forme pensée pour être enlacée.</p>
-                    <p><strong>Élégance Décorative :</strong> Avec son design minimaliste "Total White" et sa touche de rouge vif, elle s'intègre parfaitement dans un intérieur moderne, du salon au bureau de travail.</p>
+        <section class="white-card-section">
+            <h2 class="section-title">1. Pourquoi ?</h2>
+            <div class="main-layout">
+                <div class="side-image-card">
+                    <img src="couple.jpg" alt="Couple amoureux">
                 </div>
-                <img src="unnamed(3).jpg" alt="L'Âme Soeur Proche" class="side-img">
-            </div>
-        </section>
-
-        <section class="white-wrapper">
-            <div class="flex-layout">
-                <div class="flex-text">
-                    <h2 class="section-header">3. Caractéristiques Premium</h2>
-                    <div class="tech-grid">
-                        <div class="tech-card" id="card-bubbles">
-                            <span style="font-size: 2rem;">☁️</span>
-                            <h3>Soft-Touch (Fibre HD)</h3>
-                            <p style="font-size: 0.9rem; margin-top: 10px;">Fibre HD ultra-dense qui ne retient pas la poussière et offre une douceur immédiate au premier contact, imitant la sensation du cachemire.</p>
-                        </div>
-                        <div class="tech-card">
-                            <span style="font-size: 2rem;">⚖️</span>
-                            <h3>Lestage Zen</h3>
-                            <p style="font-size: 0.9rem; margin-top: 10px;">Répartition stratégique du poids pour simuler la pression rassurante d'un véritable câlin humain, favorisant la détente profonde.</p>
-                        </div>
-                        <div class="tech-card">
-                            <span style="font-size: 2rem;">🌡️</span>
-                            <h3>Thermorégulation Active</h3>
-                            <p style="font-size: 0.9rem; margin-top: 10px;">Matériaux respirants de haute technologie qui conservent la chaleur corporelle sans jamais accumuler de transpiration.</p>
-                        </div>
+                <div class="features-grid">
+                    <div class="card">
+                        <h3>Odeur</h3>
+                        <p>Technologie Aroma-Bind™ qui retient votre parfum 14 jours.</p>
+                        <a href="#" class="btn-cta">Détails</a>
+                    </div>
+                    <div class="card">
+                        <h3>Poids</h3>
+                        <p>Lestage de 1.5kg qui simule la pression d'une main rassurante.</p>
+                        <a href="#" class="btn-cta">Détails</a>
+                    </div>
+                    <div class="card">
+                        <h3>Qualité</h3>
+                        <p>Micro-velours hypoallergénique ultra-doux au toucher.</p>
+                        <a href="#" class="btn-cta">Détails</a>
+                    </div>
+                    <div class="card">
+                        <h3>Stress</h3>
+                        <p>Réduit l'anxiété nocturne et favorise un endormissement rapide.</p>
+                        <a href="#" class="btn-cta">Détails</a>
+                    </div>
+                    <div class="card">
+                        <h3>Coffret</h3>
+                        <p>Arrive dans un écrin de soie numéroté prêt à être offert.</p>
+                        <a href="#" class="btn-cta">Détails</a>
+                    </div>
+                    <div class="card">
+                        <h3>Lavage</h3>
+                        <p>Entièrement lavable à la main pour une hygiène parfaite.</p>
+                        <a href="#" class="btn-cta">Détails</a>
                     </div>
                 </div>
-                <img src="unnamed(3).jpg" alt="Technique" class="side-img">
             </div>
         </section>
 
-        <section style="padding: 60px 20px; text-align: center; color: white;">
-            <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; margin-bottom: 25px;">4. Plus qu'un objet, une émotion</h2>
-            <p style="max-width: 850px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem; font-weight: 300;">
-                En 2026, l'affection passe aussi par le confort. L'Âme Sœur n'est pas qu'une peluche, c'est un ancrage émotionnel. Sa densité a été calculée pour apaiser le rythme cardiaque lors de moments de stress. Elle diffuse une onde de sérénité qui transforme votre environnement en un sanctuaire de tendresse.
-            </p>
-        </section>
-
-        <section class="white-wrapper" style="text-align: center; border: 3px solid var(--rouge-vif);">
-            <h2 class="section-header">5. Offre de Lancement Exclusive</h2>
-            <p style="text-decoration: line-through; opacity: 0.5;">Valeur réelle : 69,00€</p>
-            <h2 style="font-size: 3.5rem; color: var(--rouge-vif); margin: 10px 0;">34,50€</h2>
-            <p style="font-size: 0.9rem; margin-bottom: 25px; color: var(--rouge-passion);">⚠️ Stock limité pour la Saint-Valentin 2026</p>
-            <button class="btn-cta vibrante" onclick="createBurst(event)">
-                PROFITER DE L'OFFRE
-                <span class="floating-heart">❤️</span>
-            </button>
-        </section>
-
-        <section class="white-wrapper">
-            <h2 class="section-header">6. Votre sérénité, notre engagement</h2>
-            <div class="tech-grid">
-                <div class="tech-card">
-                    <div style="font-size: 2rem; margin-bottom: 15px;">🛡️</div>
-                    <h4>Certifié Hypoallergénique</h4>
-                    <p style="font-size: 0.8rem; line-height: 1.4;">Confectionnée sans colorants azoïques ni produits toxiques. Idéale pour les peaux ultra-sensibles et un usage quotidien prolongé.</p>
+        <section id="offre" class="white-card-section">
+            <h2 class="section-title">2. Notre meilleure offre</h2>
+            <div class="price-row">
+                <div class="price-box">
+                    <span class="old-price">69,00€</span>
+                    <span class="new-price">34,50€</span>
+                    <a href="#" class="btn-cta btn-hero" style="width:100%">COMMANDER</a>
                 </div>
-                <div class="tech-card">
-                    <div style="font-size: 2rem; margin-bottom: 15px;">💳</div>
-                    <h4>Sécurité Bancaire Totale</h4>
-                    <p style="font-size: 0.8rem; line-height: 1.4;">Transactions protégées par cryptage SSL 256 bits (norme bancaire) et vérification 3D Secure pour une tranquillité d'esprit totale.</p>
-                </div>
-                <div class="tech-card">
-                    <div style="font-size: 2rem; margin-bottom: 15px;">✅</div>
-                    <h4>Garantie "Coup de Cœur"</h4>
-                    <p style="font-size: 0.8rem; line-height: 1.4;">Si vous ne ressentez pas l'étincelle, renvoyez-la sous 30 jours. Retour simple et remboursement intégral sans questions.</p>
+                <div class="features-grid" style="flex: 1.5;">
+                    <div class="card">
+                        <h3>Livraison 24h</h3>
+                        <p>Expédition immédiate avec suivi en temps réel.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Sécurisé</h3>
+                        <p>Paiement SSL crypté par Stripe et PayPal.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="white-wrapper">
-            <h2 class="section-header" style="text-align: center;">7. Ils ont trouvé leur Âme Sœur</h2>
+        <section class="white-card-section">
+            <h2 class="section-title" style="text-align: center;">Ils ont trouvé leur Âme Sœur</h2>
             <div class="carousel-container" id="carousel"></div>
-        </section>
-
-        <section style="text-align: center; padding: 80px 0;">
-            <h2 style="color: white; margin-bottom: 30px; font-size: 2.5rem;">8. Prêt(e) à faire fondre son cœur ?</h2>
-            <button class="btn-cta vibrante" onclick="createBurst(event)">COMMANDER MAINTENANT ❤️</button>
         </section>
     </div>
 
-    <script>
-        const heroText = "Le plus beau cadeau de Saint-Valentin...";
-        let i = 0;
-        function typeWriter() {
-            if (i < heroText.length) {
-                document.getElementById("typing-text").innerHTML += heroText.charAt(i);
-                i++; setTimeout(typeWriter, 50);
-            } else { document.getElementById("after-title").style.opacity = "1"; }
-        }
+    <div id="promo-popup">
+        <strong>🔥 VITE !</strong>
+        <p>Plus que 4 exemplaires en stock.</p>
+        <span id="popup-timer" style="font-weight: 800; font-size: 1.4rem;">10:00</span>
+    </div>
 
-        function createHeartBubbles() {
-            const card = document.getElementById('card-bubbles');
-            if(!card) return;
-            for(let j=0; j<5; j++) {
-                setTimeout(() => {
-                    const b = document.createElement('div');
-                    b.className = 'heart-bubble'; b.innerHTML = '❤️';
-                    b.style.left = Math.random() * 80 + 10 + '%';
-                    b.style.bottom = '10%';
-                    card.appendChild(b);
-                    setTimeout(() => b.remove(), 3000);
-                }, j * 600);
-            }
-        }
-        setInterval(createHeartBubbles, 3000);
-
-        const reviews = [
-            {n: "Lucas R.", m: "La douceur est incroyable, ma copine l'adore !"},
-            {n: "Sarah M.", m: "Livrée en 24h, juste à temps pour la surprise."},
-            {n: "Marc A.", m: "Bien mieux que des fleurs, ça reste dans le temps."},
-            {n: "Julie V.", m: "La texture est magique, très relaxante."},
-            {n: "Thomas D.", m: "Un sans faute pour ce cadeau 2026 !"}
-        ];
-        
-        const carousel = document.getElementById('carousel');
-        reviews.forEach(r => {
-            const div = document.createElement('div');
-            div.className = 'review-card';
-            div.innerHTML = `<p style="font-style:italic; margin-bottom:15px;">"${r.m}"</p><strong>- ${r.n}</strong>`;
-            carousel.appendChild(div);
-        });
-
-        let angle = 0;
-        function rotate() {
-            const cards = document.querySelectorAll('.review-card');
-            const radius = window.innerWidth < 768 ? 200 : 380;
-            cards.forEach((card, i) => {
-                const a = angle + (i * (360 / reviews.length));
-                const rad = a * (Math.PI / 180);
-                const x = Math.sin(rad) * radius;
-                const z = Math.cos(rad) * 150;
-                card.style.transform = `translateX(${x}px) translateZ(${z}px) scale(${(z+200)/350})`;
-                card.style.opacity = (z + 150) / 300;
-                card.style.zIndex = Math.round(z + 200);
-            });
-            angle -= 0.2;
-            requestAnimationFrame(rotate);
-        }
-
-        function createBurst(e) {
-            const x = (e.clientX || (e.touches && e.touches[0].clientX));
-            const y = (e.clientY || (e.touches && e.touches[0].clientY));
-            for(let j=0; j<12; j++) {
-                const h = document.createElement('div');
-                h.className = 'particle-heart'; h.innerHTML = '❤️';
-                h.style.left = x + 'px'; h.style.top = y + 'px';
-                h.style.setProperty('--tx', (Math.random()-0.5)*300 + 'px');
-                h.style.setProperty('--ty', (Math.random()-0.5)*300 + 'px');
-                h.style.setProperty('--tr', Math.random()*360 + 'deg');
-                document.body.appendChild(h);
-                setTimeout(() => h.remove(), 800);
-            }
-        }
-
-        window.onload = () => {
-            typeWriter(); rotate(); createHeartBubbles();
-            document.getElementById('hero-img').style.opacity = "1";
-        };
-    </script>
+    <script src="C:\Users\USER\Downloads\MonProjetHTML\interrativechallenge.js"></script>
 </body>
 </html>
